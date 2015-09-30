@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "Facebook Dislike Button",
+    "version": "0.0.1",
+
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "description": "Adds the Dislike button to Facebook posts, photos, videos, shares. Anyone with the extension can see the number of dislikes.",
+    "permissions": [
+        "cookies",
+        "activeTab",
+        "declarativeContent"
+    ],
+    "content_scripts": [{
+        "matches": ["https://www.facebook.com/*"],
+        "js": ["jquery-2.1.4.min.js", "dislike.js"]
+    }]
+}

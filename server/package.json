@@ -1,0 +1,12 @@
+{
+    "name": "fb-dislike-server",
+    "version": "0.0.1",
+    "description": "Adds the Dislike button to Facebook posts, photos, videos, shares. Anyone with the extension can see the number of dislikes.",
+    "main": "server.js",
+    "dependencies": {
+        "request": "*",
+        "mongoose": "*"
+    },
+    "license": "MIT",
+    "private": true
+}
