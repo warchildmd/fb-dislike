@@ -26,11 +26,8 @@ $(document).ready(function() {
 
     $('body').on('click', 'a.UFIDisikeLink', function() {
         alert($(this).attr('fbid'));
-        chrome.runtime.sendMessage({
-            request: "c_user"
-        }, function(response) {
-            console.log(response);
-        });
+        // TODO Facebook Login for extension
+        // TODO Get access token from localStorage
     });
 
     function getFbId(fbLikeButton) {
