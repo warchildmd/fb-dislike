@@ -1,8 +1,9 @@
 // Load the http module to create an http server.
-var http = require('http');
+var http = require('https');
 var request = require('request');
 var mongoose = require('mongoose');
 var url = require('url');
+var fs = require('fs');
 var config = require('./config.js');
 var Schema = mongoose.Schema;
 
@@ -31,8 +32,13 @@ dislikeSchema.index({
 
 var Dislike = mongoose.model('Dislike', dislikeSchema);
 
+var options = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+};
+
 // Configure our HTTP server to respond with Hello World to all requests.
-var server = http.createServer(function(req, response) {
+var server = http.createServer(options, function(req, response) {
     var params = url.parse(req.url, true).query;
 
     if (('accessToken' in params) && ('action' in params) && ('fbId' in params)) {
@@ -101,7 +107,7 @@ var server = http.createServer(function(req, response) {
                                 Dislike.count({
                                     user_id: JSON.parse(body).id,
                                     target_id: params.fbId,
-                                }, function (err, uc) {
+                                }, function(err, uc) {
                                     if (err) {
                                         response.end(JSON.stringify({
                                             count: c,

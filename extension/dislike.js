@@ -8,7 +8,6 @@ $(document).ready(function() {
         }
         $(this)
             .parent()
-            // .parent()
             .after(dislikeButton);
     });
     $('body').on('DOMNodeInserted', 'a.UFILikeLink', function() {
@@ -20,14 +19,34 @@ $(document).ready(function() {
         }
         $(this)
             .parent()
-            // .parent()
             .after(dislikeButton);
     });
 
     $('body').on('click', 'a.UFIDisikeLink', function() {
-        alert($(this).attr('fbid'));
-        // TODO Facebook Login for extension
-        // TODO Get access token from localStorage
+        var fbId = $(this).attr('fbid');
+        console.log(localStorage.getItem('accessToken'));
+        if (localStorage.getItem('accessToken')) {
+            $.ajax({
+                method: 'GET',
+                url: 'https://127.0.0.1:8000/',
+                data: {
+                    accessToken: localStorage.getItem('accessToken'),
+                    action: 'dislike', // TODO Check which action must be executed
+                    fbId: fbId
+                },
+                success: function(data, textStatus, jqXHR) {
+                    // TODO Show new count
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // TODO Notify of error
+                },
+                dataType: 'json'
+            });
+        } else {
+            chrome.extension.sendRequest({
+                type: "auth"
+            }, function(response) {});
+        }
     });
 
     function getFbId(fbLikeButton) {
